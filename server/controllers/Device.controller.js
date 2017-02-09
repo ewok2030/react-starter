@@ -1,4 +1,4 @@
-import Task from '../models/Device.model';
+import Device from '../models/Device.model';
 
 export function getDevices(req, res) {
   Device.find().exec((err, docs) => {
