@@ -22,13 +22,14 @@ const isDevelopment = process.env.NODE_ENV === 'development';
 // MongoDB Connection
 mongoose.connect(serverConfig.mongoURL, (error) => {
   if (error) {
-    throw error;
+    /* eslint-disable no-console */
+    console.log('Unable to connect to Mongo.');
+    /* eslint-enable no-console */
   }
 
   // feed some dummy data in DB
   if (serverConfig.seedDatabase) {
-    taskSeed();
-    projectSeed();
+    deviceSeed();
   }
 });
 
