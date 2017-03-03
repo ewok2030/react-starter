@@ -5,9 +5,9 @@ import Example from '../components/Example/Example';
 // Actions
 import { getDevice } from '../redux/modules/device';
 
-// Map store state to component's properties
+// Map store state to component's properties (see redux/store.js for names of modules)
 const mapStateToProps = state => ({
-  device: state.device.data,
+  device: state.device.active,
 });
 
 // Map actions to component's properties
@@ -35,11 +35,18 @@ export default class Demo extends React.Component {
     this.props.getDevice('example');
   }
 
+  handleClick = () => {
+    /* eslint-disable */
+    // shouldn't use browser's alert function, should use a modal instead
+    alert(`clicked!`);
+    /* eslint-enable */
+  }
+
   render() {
     return (
       <div>
         <h2>{this.state.viewTitle}</h2>
-        <Example title={this.props.device.title} />
+        <Example title={this.props.device !== null ? this.props.device.title : null} onClick={this.handleClick} />
       </div>
     );
   }

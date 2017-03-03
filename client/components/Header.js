@@ -16,12 +16,12 @@ export default class Header extends React.Component {
               <span className="icon-bar" />
               <span className="icon-bar" />
             </button>
-            <IndexLink to="/" className="navbar-brand" activeClassName="active" onlyActiveOnIndex >Get Things Done!</IndexLink>
+            <IndexLink to="/" className="navbar-brand" activeClassName="active" onlyActiveOnIndex >Redux Starter</IndexLink>
           </div>
           <div id="navbar" className="navbar-collapse collapse">
             <ul className="nav navbar-nav" >
-              <li><Link to="example">Example</Link></li>
-            </ul>               
+              <li><Link to="example">Router Link</Link></li>
+            </ul>
           </div>
         </div>
       </nav>
