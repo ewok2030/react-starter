@@ -11,7 +11,7 @@ export default function () {
     const device2 = new Device({ title: 'Device Two', status: 'Active', dateCreated: new Date() });
     const device3 = new Device({ title: 'Device Three', status: 'New', dateCreated: new Date() });
 
-    Device.create([device1, device2, device3 ], (error) => {
+    Device.create([device1, device2, device3], (error) => {
       if (!error) {
         console.log('Device seeding complete!');
       } else {

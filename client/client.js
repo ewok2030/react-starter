@@ -8,12 +8,18 @@ import store from './redux/store';
 import Layout from './containers/Layout';
 import Demo from './containers/Demo';
 
-const app = document.getElementById('app');
-ReactDOM.render(
-  <Provider store={store}>
-    <Router history={hashHistory}>
-      <Route path="/" component={Layout} >
-        <IndexRoute component={Demo} />
-      </Route>
-    </Router>
-  </Provider>, app);
+class App extends React.Component {
+  render() {
+    return (
+      <Provider store={store}>
+        <Router history={hashHistory}>
+          <Route path="/" component={Layout} >
+            <IndexRoute component={Demo} />
+          </Route>
+        </Router>
+      </Provider>
+    );
+  }
+}
+
+ReactDOM.render(<App />, document.getElementById('app'));

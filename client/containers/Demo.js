@@ -12,15 +12,18 @@ const mapStateToProps = state => ({
 
 // Map actions to component's properties
 const mapDispatchToProps = dispatch => ({
-  getDevice: () => {
-    dispatch(getDevice());
+  getDevice: (id) => {
+    dispatch(getDevice(id));
   },
 });
 
+// @connect decorator binds the above to the class' properties
 @connect(mapStateToProps, mapDispatchToProps)
 export default class Demo extends React.Component {
+  // Properties must be defined for the props attached via @connect decorator
   static propTypes = {
-    
+    device: React.PropTypes.object.isRequired,
+    getDevice: React.PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -28,13 +31,15 @@ export default class Demo extends React.Component {
     this.state = {
       viewTitle: 'Example',
     };
+    // Constructor is called before render()
+    this.props.getDevice('example');
   }
 
   render() {
     return (
       <div>
         <h2>{this.state.viewTitle}</h2>
-        <Example />
+        <Example title={this.props.device.title} />
       </div>
     );
   }
