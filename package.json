@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "description": "a starter template",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development nodemon --exec babel-node ./server/server.js",
-    "dev2": "cross-env NODE_ENV=development babel-node ./server/server.js",
+    "dev": "cross-env NODE_ENV=development babel-node ./server/server.js",
+    "devServer": "cross-env NODE_ENV=development nodemon --exec babel-node ./server/server.js",
     "build": "webpack && babel server --out-dir build",
     "lint": "eslint client server",
     "start": "cross-env NODE_ENV=production node build/server.js"
