@@ -4,7 +4,7 @@ import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 import { Provider } from 'react-redux';
 import store from './redux/store';
 
-// Views
+// Containers (i.e. the React component where we'll manage state)
 import Layout from './containers/Layout';
 import Demo from './containers/Demo';
 
@@ -22,4 +22,5 @@ class App extends React.Component {
   }
 }
 
+// Inject the React App into the div wit ID 'app'
 ReactDOM.render(<App />, document.getElementById('app'));
