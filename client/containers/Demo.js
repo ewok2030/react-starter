@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 // Components
 import Example from '../components/Example/Example';
-// Actions
+// Action Creators
 import { getDevice } from '../redux/modules/device';
 
 // Map store state to component's properties (see redux/store.js for names of modules)

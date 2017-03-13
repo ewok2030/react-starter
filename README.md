@@ -23,6 +23,32 @@ The client side is built with the following tools:
 * [eslint](http://eslint.org/) for identifying and reporting on patterns in JavaScript
   * [airbnb's style guide](https://github.com/airbnb/javascript) for enforcing 'a reasonable approach to JavaScript'
 
+## Structure
+The client side project folder structure is:
+
+* components
+  * The reusable UI components where all state is injected by their parent container 
+* containers
+  * The special components who have the redux store's state bound to this properties.  
+  * The containers load dummy components and inject the state into them
+  * A container is usually equivalent to a web page
+* redux
+  * Where the applications state is managed via independent reducers and a redux store. See [React-Redux](#react-redux) for more.
+  * Each module defines its own action types, action creators, and a reducer
+* templates
+  * Where the index.html and favicon.ico are kept
+  * All UI is managed via the components
+* client.js
+  * Where the React app is initialized and routes are defined
+
+## React-Redux
+![react/redux](docs/img/redux.png)
+
+## Getting Started
+To start developing an app, you'll want to identify your containers (i.e. pages or views), components (i.e re-usable UI controls), and reducers (i.e. how the app state is to be managed).
+
+New containers must be added to [client.js](client/client.js) using the React router. New reducers must be loaded into the Redux store by using combineReducers in [store.js](client/redux/store.js). 
+
 # Server
 The server side is built with the following tools:
 
