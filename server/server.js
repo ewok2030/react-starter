@@ -6,18 +6,15 @@ import compression from 'compression';
 import bodyParser from 'body-parser';
 import express from 'express';
 import webpack from 'webpack';
+import WebpackDevServer from 'webpack-dev-server';
 import mongoose from 'mongoose';
-// webpack
-import webpackMiddleware from 'webpack-dev-middleware';
-import webpackHotMiddleware from 'webpack-hot-middleware';
-import webpackConfig from '../webpack.config';
 
+// Configuration
 import serverConfig from './config';
 import deviceSeed from './seed/Device.seed';
 
 // Set native promises as mongoose promise
 mongoose.Promise = global.Promise;
-const isDevelopment = process.env.NODE_ENV === 'development';
 
 // MongoDB Connection
 mongoose.connect(serverConfig.mongoURL, (error) => {
@@ -40,53 +37,34 @@ const app = express();
 app.set('port', serverConfig.port);
 app.use(compression());
 app.use(bodyParser.json());
-/**
- * Route handlers
- */
-const deviceRoutes = require('./routes/Device.routes');
-
-
-/**
- * API routes
- */
-app.use('/api/devices', deviceRoutes.default);
-
+// default route for single page app
+app.use('/', express.static(path.join(__dirname, '/public')));
 
 /**
  * Start Express server.
  */
 // Enable webpack middleware if in debug mode
-if (isDevelopment) {
-  const compiler = webpack(webpackConfig);
-  const middleware = webpackMiddleware(compiler, {
-    hot: true,
-    inline: true,
-    quiet: true,
-    noInfo: true,
-    publicPath: webpackConfig.output.publicPath,
-    stats: {
-      colors: true,
-      hash: false,
-      timings: true,
-      chunks: false,
-      chunkModules: false,
-      modules: false,
-    },
-  });
+/* eslint-disable no-console*/
+const webpackConfig = process.env.NODE_ENV === 'development' ? require('../webpack.config.dev') : null;
 
-  app.use(middleware);
-  app.use(webpackHotMiddleware(compiler));
-  // TODO: Cant use browserHistory because all routes get redirected here. ALso, need to support api
-  app.get('/', (req, res) => {
-    res.write(middleware.fileSystem.readFileSync(path.join(__dirname, 'public/index.html')));
-    res.end();
-  });
-} else {
-  app.use(express.static(path.join(__dirname, '/public')));
-  app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public/index.html'));
+if (webpackConfig) {
+  console.log('server is running in development mode');
+  const compiler = webpack(webpackConfig);
+  const devServer = new WebpackDevServer(compiler, webpackConfig.devServer);
+  devServer.listen(webpackConfig.devServer.port, () => {
+    console.log(`webpack-dev-server is listening on port ${webpackConfig.devServer.port}`);
   });
 }
+
+/**
+ * Route handlers
+ */
+const deviceRoutes = require('./routes/Device.routes');
+
+/**
+ * API routes
+ */
+app.use('/api/devices', deviceRoutes.default);
 
 /* eslint-disable*/
 app.listen(serverConfig.port, () => {
