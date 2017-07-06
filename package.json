@@ -3,10 +3,9 @@
   "version": "0.0.1",
   "description": "a starter template",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development babel-node ./server/server.js",
-    "devServer": "cross-env NODE_ENV=development nodemon --exec babel-node ./server/server.js",
-    "build": "webpack && babel server --out-dir build",
+    "dev": "cross-env NODE_ENV=development nodemon --exec babel-node ./server/server.js",
     "lint": "eslint client server",
+    "prestart": "webpack --config webpack.config.prod.js && babel server --out-dir build",
     "start": "cross-env NODE_ENV=production node build/server.js"
   },
   "repository": {
@@ -24,7 +23,7 @@
     "body-parser": "^1.16.0",
     "compression": "^1.6.2",
     "express": "^4.14.0",
-    "html-webpack-plugin": "^2.26.0",
+    "html-webpack-plugin": "^2.29.0",
     "mongoose": "^4.7.7",
     "path": "^0.12.7",
     "react": "^15.4.2",
@@ -35,9 +34,8 @@
     "redux-logger": "^2.7.4",
     "redux-promise-middleware": "^4.2.0",
     "redux-thunk": "^2.2.0",
-    "webpack": "^1.14.0",
-    "webpack-dev-middleware": "^1.9.0",
-    "webpack-hot-middleware": "^2.15.0"
+    "webpack": "^2.2.0",
+    "webpack-dev-server": "^2.5.0"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",
