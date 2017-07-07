@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 // define the expected fields and types for this object to be inserted into Mongo
-const postSchema = new Schema({
+const taskSchema = new Schema({
   title: {
     type: String,
     required: true,
@@ -31,4 +31,4 @@ const postSchema = new Schema({
 });
 
 // The first argument is the collection name, second is the schema to expect
-export default mongoose.model('Post', postSchema);
+export default mongoose.model('Task', taskSchema);

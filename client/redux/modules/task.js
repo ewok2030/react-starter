@@ -5,9 +5,12 @@ import axios from 'axios';
   Define a set of action types to be used within this module
   Convention is to name them as project/module/actionType
 */
-const GET_POST = 'redux-starter/post/GET_POST';
-const GET_POST_SUCCESS = 'redux-starter/post/GET_POST_SUCCESS';
-const GET_POST_ERROR = 'redux-starter/post/GET_POST_ERROR';
+const GET_TASKS = 'redux-starter/task/GET_TASKS';
+const GET_TASKS_SUCCESS = 'redux-starter/task/GET_TASKS_SUCCESS';
+const GET_TASKS_ERROR = 'redux-starter/task/GET_TASKS_ERROR';
+const GET_TASK = 'redux-starter/task/GET_TASK';
+const GET_TASK_SUCCESS = 'redux-starter/task/GET_TASK_SUCCESS';
+const GET_TASK_ERROR = 'redux-starter/task/GET_TASK_ERROR';
 
 // Initial state
 /*
@@ -16,9 +19,9 @@ const GET_POST_ERROR = 'redux-starter/post/GET_POST_ERROR';
    who reference this module's state should be able to deal with missing properties
 */
 const initialState = {
-  active: null,
-  isLoading: false,
-  list: [],
+  active: null, // which task is currently select
+  isLoading: false, // if the UI should show loading
+  list: [], // list of tasks populated from API
 };
 
 // Reducer
@@ -34,22 +37,41 @@ export default function reducer(state = initialState, action = {}) {
     we must use immutable operations only.
   */
   switch (action.type) {
-    case GET_POST:
+    case GET_TASKS:
       return {
         ...state,
         isLoading: true, // Tell the UI some loading action has begun, so it can update
       };
-    case GET_POST_SUCCESS:
+    case GET_TASKS_SUCCESS:
       return {
         ...state,
         isLoading: false, // Tell the UI loading has complete
-        active: action.data, // Set the Active post to the action payload
+        list: action.data, // lists of task entities
+        active: null, // clear the active task, in case it is not present in state.list
       };
-    case GET_POST_ERROR:
+    case GET_TASKS_ERROR:
       return {
         ...state,
         isLoading: false, // Tell the UI loading has complete
-        active: null, // GET failed, so clear the active post to avoid confusion
+        active: null, // GET failed, so clear the active task to avoid confusion
+        error: action.error, // Tell the UI what the error message is
+      };
+    case GET_TASK:
+      return {
+        ...state,
+        isLoading: true, // Tell the UI some loading action has begun, so it can update
+      };
+    case GET_TASK_SUCCESS:
+      return {
+        ...state,
+        isLoading: false, // Tell the UI loading has complete
+        active: action.data, // Set the Active task to the action payload
+      };
+    case GET_TASK_ERROR:
+      return {
+        ...state,
+        isLoading: false, // Tell the UI loading has complete
+        active: null, // GET failed, so clear the active task to avoid confusion
         error: action.error, // Tell the UI what the error message is
       };
     default:
@@ -66,21 +88,31 @@ export default function reducer(state = initialState, action = {}) {
   The reducer will listen for events, and modify the state as needed.
   Any data the reducer requires must be a payload in the dispatched action.
 */
-export const getPost = id => (dispatch) => {
+export const getTasks = () => (dispatch) => {
   /*
-    Dispatched Actions must always have a 'type' property, but can have others.
+    Dispatched Actions must always have a 'type' property, but can have other fields.
     The reducer consumes the actions, so the contents of the action object is a contract between the two.
   */
 
   // Dispatch an action, so the reducer can update the isLoading property
-  dispatch({ type: GET_POST });
+  dispatch({ type: GET_TASKS });
 
   // Make a call to an API
-  axios.get(`/api/post/${id}`).then((response) => {
+  axios.get('/api/task/').then((response) => {
     // If call was successful, dispatch success action type
-    dispatch({ type: GET_POST_SUCCESS, data: response.data });
+    dispatch({ type: GET_TASKS_SUCCESS, data: response.data });
   }).catch((response) => {
     // If call was unsucceffuly, dispatch error action type
-    dispatch({ type: GET_POST_ERROR, error: response.data });
+    dispatch({ type: GET_TASKS_ERROR, error: response.data });
+  });
+};
+
+
+export const getTask = id => (dispatch) => {
+  dispatch({ type: GET_TASK });
+  axios.get(`/api/task/${id}`).then((response) => {
+    dispatch({ type: GET_TASK_SUCCESS, data: response.data });
+  }).catch((response) => {
+    dispatch({ type: GET_TASK_ERROR, error: response.data });
   });
 };

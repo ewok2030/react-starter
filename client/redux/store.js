@@ -2,9 +2,10 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 import promise from 'redux-promise-middleware';
+import { reducer as form } from 'redux-form';
 
 // Modules - import each module to be mounted on redux store
-import post from './modules/post';
+import task from './modules/task';
 
 const middleware = applyMiddleware(promise(), thunk, logger());
 
@@ -13,7 +14,8 @@ const middleware = applyMiddleware(promise(), thunk, logger());
   Each reducer will be mounted at store.<reducerName>
 */
 const reducer = combineReducers({
-  post,
+  form, // really important redux-form's reducer is named 'form' on the store
+  task,
 });
 
 export default createStore(reducer, middleware);
