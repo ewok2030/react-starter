@@ -5,9 +5,9 @@ import axios from 'axios';
   Define a set of action types to be used within this module
   Convention is to name them as project/module/actionType
 */
-const GET_DEVICE = 'redux-starter/device/GET_DEVICE';
-const GET_DEVICE_SUCCESS = 'redux-starter/device/GET_DEVICE_SUCCESS';
-const GET_DEVICE_ERROR = 'redux-starter/device/GET_DEVICE_ERROR';
+const GET_POST = 'redux-starter/post/GET_POST';
+const GET_POST_SUCCESS = 'redux-starter/post/GET_POST_SUCCESS';
+const GET_POST_ERROR = 'redux-starter/post/GET_POST_ERROR';
 
 // Initial state
 /*
@@ -34,22 +34,22 @@ export default function reducer(state = initialState, action = {}) {
     we must use immutable operations only.
   */
   switch (action.type) {
-    case GET_DEVICE:
+    case GET_POST:
       return {
         ...state,
         isLoading: true, // Tell the UI some loading action has begun, so it can update
       };
-    case GET_DEVICE_SUCCESS:
+    case GET_POST_SUCCESS:
       return {
         ...state,
         isLoading: false, // Tell the UI loading has complete
-        active: action.data, // Set the Active device to the action payload
+        active: action.data, // Set the Active post to the action payload
       };
-    case GET_DEVICE_ERROR:
+    case GET_POST_ERROR:
       return {
         ...state,
         isLoading: false, // Tell the UI loading has complete
-        active: null, // GET failed, so clear the active device to avoid confusion
+        active: null, // GET failed, so clear the active post to avoid confusion
         error: action.error, // Tell the UI what the error message is
       };
     default:
@@ -66,21 +66,21 @@ export default function reducer(state = initialState, action = {}) {
   The reducer will listen for events, and modify the state as needed.
   Any data the reducer requires must be a payload in the dispatched action.
 */
-export const getDevice = id => (dispatch) => {
+export const getPost = id => (dispatch) => {
   /*
     Dispatched Actions must always have a 'type' property, but can have others.
     The reducer consumes the actions, so the contents of the action object is a contract between the two.
   */
 
   // Dispatch an action, so the reducer can update the isLoading property
-  dispatch({ type: GET_DEVICE });
+  dispatch({ type: GET_POST });
 
   // Make a call to an API
-  axios.get(`/api/device/${id}`).then((response) => {
+  axios.get(`/api/post/${id}`).then((response) => {
     // If call was successful, dispatch success action type
-    dispatch({ type: GET_DEVICE_SUCCESS, data: response.data });
+    dispatch({ type: GET_POST_SUCCESS, data: response.data });
   }).catch((response) => {
     // If call was unsucceffuly, dispatch error action type
-    dispatch({ type: GET_DEVICE_ERROR, error: response.data });
+    dispatch({ type: GET_POST_ERROR, error: response.data });
   });
 };

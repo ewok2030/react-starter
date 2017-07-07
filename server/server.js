@@ -11,12 +11,17 @@ import mongoose from 'mongoose';
 
 // Configuration
 import serverConfig from './config';
-import deviceSeed from './seed/Device.seed';
 
 // Set native promises as mongoose promise
 mongoose.Promise = global.Promise;
 
-// MongoDB Connection
+/**
+ * MongoDb Connection
+ */
+
+// if we are to seed database, load seed data. if not, dont load to avoid depedending on the file
+const postSeed = serverConfig.seedDatabase ? require('./seed/Post.seed') : null;
+
 mongoose.connect(serverConfig.mongoURL, (error) => {
   if (error) {
     /* eslint-disable no-console */
@@ -26,7 +31,7 @@ mongoose.connect(serverConfig.mongoURL, (error) => {
 
   // feed some dummy data in DB
   if (serverConfig.seedDatabase) {
-    deviceSeed();
+    postSeed();
   }
 });
 
@@ -59,12 +64,12 @@ if (webpackConfig) {
 /**
  * Route handlers
  */
-const deviceRoutes = require('./routes/Device.routes');
+const postRoutes = require('./routes/Post.routes');
 
 /**
  * API routes
  */
-app.use('/api/devices', deviceRoutes.default);
+app.use('/api/posts', postRoutes.default);
 
 /* eslint-disable*/
 app.listen(serverConfig.port, () => {

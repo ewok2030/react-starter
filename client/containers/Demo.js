@@ -3,17 +3,17 @@ import { connect } from 'react-redux';
 // Components
 import Example from '../components/Example/Example';
 // Action Creators
-import { getDevice } from '../redux/modules/device';
+import { getPost } from '../redux/modules/post';
 
 // Map store state to component's properties (see redux/store.js for names of modules)
 const mapStateToProps = state => ({
-  device: state.device.active,
+  post: state.post.active,
 });
 
 // Map actions to component's properties
 const mapDispatchToProps = dispatch => ({
-  getDevice: (id) => {
-    dispatch(getDevice(id));
+  getPost: (id) => {
+    dispatch(getPost(id));
   },
 });
 
@@ -22,8 +22,8 @@ const mapDispatchToProps = dispatch => ({
 export default class Demo extends React.Component {
   // Properties must be defined for the props attached via @connect decorator
   static propTypes = {
-    device: React.PropTypes.object.isRequired,
-    getDevice: React.PropTypes.func.isRequired,
+    post: React.PropTypes.object.isRequired,
+    getPost: React.PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -32,7 +32,7 @@ export default class Demo extends React.Component {
       viewTitle: 'Example',
     };
     // Constructor is called before render()
-    this.props.getDevice('example');
+    this.props.getPost('example');
   }
 
   handleClick = () => {
@@ -46,7 +46,7 @@ export default class Demo extends React.Component {
     return (
       <div>
         <h2>{this.state.viewTitle}</h2>
-        <Example title={this.props.device !== null ? this.props.device.title : null} onClick={this.handleClick} />
+        <Example title={this.props.post !== null ? this.props.post.title : null} onClick={this.handleClick} />
       </div>
     );
   }
