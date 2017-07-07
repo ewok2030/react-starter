@@ -2,9 +2,9 @@
 
 A starter template for building nodejs API and react/redux apps
 
-To get started, run ```npm install``` and then ```npm run dev``` to start developing the client side with React hot module reload.
+To get started, run ```npm install``` and then ```npm run dev``` to start developing the server side monitored for changes by nodemon and hot module reload on the client side via webpack-dev-server.
 
-To enable reloading on server changes (via nodemon) and hmr on the client side, run ```npm run devServer```.
+To run in production mode, run ```npm run start``` which will build the whole solution and run from the build.
 
 ## Client
 
