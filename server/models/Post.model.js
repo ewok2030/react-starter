@@ -2,7 +2,8 @@ import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
 
-const deviceSchema = new Schema({
+// define the expected fields and types for this object to be inserted into Mongo
+const postSchema = new Schema({
   title: {
     type: String,
     required: true,
@@ -29,4 +30,5 @@ const deviceSchema = new Schema({
   tags: [String],
 });
 
-export default mongoose.model('Device', deviceSchema);
+// The first argument is the collection name, second is the schema to expect
+export default mongoose.model('Post', postSchema);
