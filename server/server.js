@@ -20,7 +20,7 @@ mongoose.Promise = global.Promise;
  */
 
 // if we are to seed database, load seed data. if not, dont load to avoid depedending on the file
-const postSeed = serverConfig.seedDatabase ? require('./seed/Post.seed') : null;
+const taskSeed = serverConfig.seedDatabase ? require('./seed/Task.seed') : null;
 
 mongoose.connect(serverConfig.mongoURL, (error) => {
   if (error) {
@@ -31,7 +31,7 @@ mongoose.connect(serverConfig.mongoURL, (error) => {
 
   // feed some dummy data in DB
   if (serverConfig.seedDatabase) {
-    postSeed();
+    taskSeed();
   }
 });
 
@@ -64,12 +64,12 @@ if (webpackConfig) {
 /**
  * Route handlers
  */
-const postRoutes = require('./routes/Post.routes');
+const taskRoutes = require('./routes/Task.routes');
 
 /**
  * API routes
  */
-app.use('/api/posts', postRoutes.default);
+app.use('/api/task', taskRoutes.default);
 
 /* eslint-disable*/
 app.listen(serverConfig.port, () => {

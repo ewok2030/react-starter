@@ -6,7 +6,7 @@ import store from './redux/store';
 
 // Containers (i.e. the React component where we'll manage state)
 import Layout from './containers/Layout';
-import Demo from './containers/Demo';
+import Tasks from './containers/Tasks';
 
 class App extends React.Component {
   render() {
@@ -14,7 +14,7 @@ class App extends React.Component {
       <Provider store={store}>
         <Router history={hashHistory}>
           <Route path="/" component={Layout} >
-            <IndexRoute component={Demo} />
+            <IndexRoute component={Tasks} />
           </Route>
         </Router>
       </Provider>

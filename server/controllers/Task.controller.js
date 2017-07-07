@@ -1,7 +1,7 @@
-import Post from '../models/Post.model';
+import Task from '../models/Task.model';
 
-export function getPosts(req, res) {
-  Post.find().exec((err, docs) => {
+export function getTasks(req, res) {
+  Task.find().exec((err, docs) => {
     if (err) {
       res.status(500).send(err);
     }
@@ -9,8 +9,8 @@ export function getPosts(req, res) {
   });
 }
 
-export function getPost(req, res) {
-  Post.findById(req.params.id).exec((err, doc) => {
+export function getTask(req, res) {
+  Task.findById(req.params.id).exec((err, doc) => {
     if (err) {
       res.status(500).send(err);
     }
@@ -18,13 +18,13 @@ export function getPost(req, res) {
   });
 }
 
-export function addPost(req, res) {
+export function addTask(req, res) {
   // Check for required fields
-  if (!req.body.post.title || !req.body.post.status || !req.body.post.dateCreated) {
+  if (!req.body.task.title || !req.body.task.status || !req.body.task.dateCreated) {
     res.status(403).end();
   }
 
-  const newDoc = new Post(req.body.post);
+  const newDoc = new Task(req.body.task);
 
   newDoc.save((err, saved) => {
     if (err) {
@@ -34,8 +34,8 @@ export function addPost(req, res) {
   });
 }
 
-export function updatePost(req, res) {
-  Post.findByIdAndUpdate(req.params.id, {
+export function updateTask(req, res) {
+  Task.findByIdAndUpdate(req.params.id, {
     $set: req.body,
   }, { new: true }).exec((err, doc) => {
     if (err) {
@@ -45,9 +45,9 @@ export function updatePost(req, res) {
   });
 }
 
-export function deletePost(req, res) {
-  // Post.findByIdAndRemove(id, options, callback)
-  Post.findById(req.params.id).exec((err, doc) => {
+export function deleteTask(req, res) {
+  // Task.findByIdAndRemove(id, options, callback)
+  Task.findById(req.params.id).exec((err, doc) => {
     if (err) {
       res.status(500).send(err);
     }
