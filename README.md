@@ -60,3 +60,13 @@ The server side is built with the following tools:
 * [express](https://github.com/expressjs/express) for web server
   * When ```NODE_ENV=production``` webpack-dev-server will be started on port configured at [webpack.config.dev](webpack.config.dev.js) => devServer.port. All requests will be proxied back to express server running on dev port 3000.
 * [mongoose](https://github.com/Automattic/mongoose) for asynchronous access to MongoDB
+
+## Docker
+
+To build a docker image from the production build, run the following from the root directory:
+
+```bash
+npm install
+npm run build
+docker build -t {repo}/{app-name} .
+```
