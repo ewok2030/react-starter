@@ -16,7 +16,7 @@ export default class Header extends React.Component {
               <span className="icon-bar" />
               <span className="icon-bar" />
             </button>
-            <IndexLink to="/" className="navbar-brand" activeClassName="active" onlyActiveOnIndex >Redux Starter</IndexLink>
+            <IndexLink to="/" className="navbar-brand" activeClassName="active" onlyActiveOnIndex >React Starter</IndexLink>
           </div>
           <div id="navbar" className="navbar-collapse collapse">
             <ul className="nav navbar-nav" >
