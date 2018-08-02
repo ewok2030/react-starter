@@ -1,5 +1,5 @@
 {
-  "name": "redux-starter",
+  "name": "react-starter",
   "version": "0.0.1",
   "description": "a starter template",
   "scripts": {
@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ewok2030/redux-starter.git"
+    "url": "git+https://github.com/ewok2030/react-starter.git"
   },
   "author": "Michael Palumbo",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ewok2030/redux-starter/issues"
+    "url": "https://github.com/ewok2030/react-starter/issues"
   },
-  "homepage": "https://github.com/ewok2030/redux-starter#readme",
+  "homepage": "https://github.com/ewok2030/react-starter#readme",
   "dependencies": {
     "axios": "^0.15.3",
     "body-parser": "^1.16.0",

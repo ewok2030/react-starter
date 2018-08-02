@@ -5,12 +5,12 @@ import axios from 'axios';
   Define a set of action types to be used within this module
   Convention is to name them as project/module/actionType
 */
-const GET_TASKS = 'redux-starter/task/GET_TASKS';
-const GET_TASKS_SUCCESS = 'redux-starter/task/GET_TASKS_SUCCESS';
-const GET_TASKS_ERROR = 'redux-starter/task/GET_TASKS_ERROR';
-const GET_TASK = 'redux-starter/task/GET_TASK';
-const GET_TASK_SUCCESS = 'redux-starter/task/GET_TASK_SUCCESS';
-const GET_TASK_ERROR = 'redux-starter/task/GET_TASK_ERROR';
+const GET_TASKS = 'react-starter/task/GET_TASKS';
+const GET_TASKS_SUCCESS = 'react-starter/task/GET_TASKS_SUCCESS';
+const GET_TASKS_ERROR = 'react-starter/task/GET_TASKS_ERROR';
+const GET_TASK = 'react-starter/task/GET_TASK';
+const GET_TASK_SUCCESS = 'react-starter/task/GET_TASK_SUCCESS';
+const GET_TASK_ERROR = 'react-starter/task/GET_TASK_ERROR';
 
 // Initial state
 /*
