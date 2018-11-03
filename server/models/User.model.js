@@ -3,18 +3,18 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 // define the expected fields and types for this object to be inserted into Mongo
-const taskSchema = new Schema({
-  title: {
+const userSchema = new Schema({
+  username: {
     type: String,
     required: true,
   },
-  description: {
+  email: {
     type: String,
-    default: '',
-    required: false,
+    required: true,
   },
   status: {
     type: String,
+    default: 'new',
     required: true,
   },
   dateCreated: {
@@ -31,4 +31,4 @@ const taskSchema = new Schema({
 });
 
 // The first argument is the collection name, second is the schema to expect
-export default mongoose.model('Task', taskSchema);
+export default mongoose.model('User', userSchema);
