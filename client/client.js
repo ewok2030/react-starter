@@ -1,26 +1,36 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 import { Provider } from 'react-redux';
-import store from './redux/store';
+import { Route } from 'react-router';
+import { ConnectedRouter } from 'connected-react-router'
+import { createBrowserHistory } from 'history';
+import configureStore from './store/configureStore';
 
 // Containers (i.e. the React component where we'll manage state)
-import Layout from './containers/Layout';
-import Tasks from './containers/Tasks';
+import Root from './containers/Root';
+import Home from './containers/Home';
 
-class App extends React.Component {
+// Create browser history to use in the Redux store
+const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href');
+const history = createBrowserHistory({ basename: baseUrl });
+
+// Get the application-wide store instance, prepopulating with state from the server where available.
+const initialState = window.initialReduxState;
+const store = configureStore(history, initialState);
+
+class Client extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <Router history={hashHistory}>
-          <Route path="/" component={Layout} >
-            <IndexRoute component={Tasks} />
-          </Route>
-        </Router>
+        <ConnectedRouter history={history}>
+          <Root>
+            <Route exact path='/' component={Home} />
+          </Root>
+        </ConnectedRouter>
       </Provider>
     );
   }
 }
 
 // Inject the React App into the div wit ID 'app'
-ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render(<Client />, document.getElementById('client'));
