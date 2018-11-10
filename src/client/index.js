@@ -24,7 +24,7 @@ class Client extends React.Component {
       <Provider store={store}>
         <ConnectedRouter history={history}>
           <Root>
-            <Route exact path='/' component={Home} />
+            <Route exact path="/" component={Home} />
           </Root>
         </ConnectedRouter>
       </Provider>
@@ -34,3 +34,5 @@ class Client extends React.Component {
 
 // Inject the React App into the div wit ID 'app'
 ReactDOM.render(<Client />, document.getElementById('client'));
+
+module.hot.accept();
