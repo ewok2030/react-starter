@@ -5,8 +5,6 @@ import path from 'path';
 import compression from 'compression';
 import bodyParser from 'body-parser';
 import express from 'express';
-import webpack from 'webpack';
-import WebpackDevServer from 'webpack-dev-server';
 import mongoose from 'mongoose';
 
 // Configuration
@@ -38,28 +36,13 @@ mongoose.connect(serverConfig.mongoURL, (error) => {
 /**
  * Create Express server.
  */
+const port = 3000;
 const app = express();
-app.set('port', serverConfig.port);
+app.set('port', port);
 app.use(compression());
 app.use(bodyParser.json());
 // default route for single page app
 app.use('/', express.static(path.join(__dirname, '/public')));
-
-/**
- * Start Express server.
- */
-// Enable webpack middleware if in debug mode
-/* eslint-disable no-console*/
-const webpackConfig = process.env.NODE_ENV === 'development' ? require('../webpack.config.dev') : null;
-
-if (webpackConfig) {
-  console.log('server is running in development mode');
-  const compiler = webpack(webpackConfig);
-  const devServer = new WebpackDevServer(compiler, webpackConfig.devServer);
-  devServer.listen(webpackConfig.devServer.port, () => {
-    console.log(`webpack-dev-server is listening on port ${webpackConfig.devServer.port}`);
-  });
-}
 
 /**
  * Route handlers
@@ -69,12 +52,12 @@ const userRoutes = require('./routes/User.routes');
 /**
  * API routes
  */
-app.use('/api/user', userRoutes.default);
+app.use('/api/account', userRoutes.default);
 
-/* eslint-disable*/
-app.listen(8080, () => {
-  console.log('App is running at http://localhost:8080 in %s mode', app.get('env'));
+
+app.listen(app.get('port'), () => {
+  console.log('App is running at http://localhost:%s in %s mode', app.get('port'), app.get('env'));
   console.log('\tPress CTRL-C to stop\n');
 });
-/* eslint-enable*/
+
 export default app;
