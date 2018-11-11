@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 // Material UI
@@ -25,53 +25,49 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 
 // Action Creators
-import { getCurrentUser } from '../store/modules/Account';
+import { getCurrentUser } from '../store/modules/account';
 
 class Root extends React.Component {
-
   constructor(props) {
     super(props);
     // Constructor is called before render()
     this.state = {
-      isNavMenuOpen: false,
+      isNavMenuOpen: false
     };
-    this.props.getCurrentUser();
+    props.getCurrentUser();
   }
 
   toggleNavMenu = () => {
-    this.setState({ isNavMenuOpen: !this.state.isNavMenuOpen });
+    const { isNavMenuOpen } = this.state;
+    this.setState({ isNavMenuOpen: !isNavMenuOpen });
   };
 
-  renderNavMenu = () => {
-    return (
-      <List>
-        <ListItem component={Link} to="/" button>
-          <ListItemIcon>
-            <DashboardIcon />
-          </ListItemIcon>
-          <ListItemText primary="Home" />
-        </ListItem>
-      </List>
-    );
-  }
+  renderNavMenu = () => (
+    <List>
+      <ListItem component={Link} to="/" button>
+        <ListItemIcon>
+          <DashboardIcon />
+        </ListItemIcon>
+        <ListItemText primary="Home" />
+      </ListItem>
+    </List>
+  );
 
   render() {
-    const { classes } = this.props;
+    const { classes, children } = this.props;
+    const { isNavMenuOpen } = this.state;
     return (
       <React.Fragment>
         <CssBaseline />
         <div className={classes.root}>
-          <AppBar variant='absolute' className={classes.appBar}>
+          <AppBar variant="absolute" className={classes.appBar}>
             <Toolbar>
-              <IconButton
-                color="inherit"
-                aria-label="Menu"
-                onClick={this.toggleNavMenu}
-                className={classes.menuButton}
-              >
+              <IconButton color="inherit" aria-label="Menu" onClick={this.toggleNavMenu} className={classes.menuButton}>
                 <MenuIcon />
               </IconButton>
-              <Typography variant="title" color="inherit" className={classes.title}>Marine Cloud Environment</Typography>
+              <Typography variant="title" color="inherit" className={classes.title}>
+                React Startersdfsfds
+              </Typography>
               <IconButton color="inherit" component={Link} to="/help">
                 <HelpIcon />
               </IconButton>
@@ -85,22 +81,14 @@ class Root extends React.Component {
               </IconButton>
             </Toolbar>
           </AppBar>
-          <Drawer
-            onClose={this.toggleNavMenu}
-            open={this.state.isNavMenuOpen}
-          >
-            <div
-              tabIndex={0}
-              role="button"
-              onClick={this.toggleNavMenu}
-              onKeyDown={this.toggleNavMenu}
-            >
+          <Drawer onClose={this.toggleNavMenu} open={isNavMenuOpen}>
+            <div tabIndex={0} role="button" onClick={this.toggleNavMenu} onKeyDown={this.toggleNavMenu}>
               {this.renderNavMenu()}
             </div>
           </Drawer>
           <main className={classes.mainContent}>
             <div className={classes.appBarSpacer} />
-            {this.props.children}
+            {children}
           </main>
         </div>
       </React.Fragment>
@@ -109,45 +97,46 @@ class Root extends React.Component {
 }
 
 Root.propTypes = {
-  classes: PropTypes.object.isRequired,
-  children: PropTypes.array.isRequired,
+  classes: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
   getCurrentUser: PropTypes.func.isRequired,
   currentUser: PropTypes.shape({
-    userName: PropTypes.string,
-  }),
+    userName: PropTypes.string
+  })
 };
 
 // Default property values
-Root.defaultTypes = {
-  currentUser: null,
+Root.defaultProps = {
+  children: null,
+  currentUser: null
 };
 
 // Map store state to component's properties (see redux/store.js for names of modules)
 const mapStateToProps = state => ({
   location: state.router.location,
-  currentUser: state.account.current,
+  currentUser: state.account.current
 });
 
 // Map actions to component's properties
 const mapDispatchToProps = dispatch => ({
   getCurrentUser: () => {
     dispatch(getCurrentUser());
-  },
+  }
 });
 
 const styles = theme => ({
   root: {
-    flexGrow: 1,
+    flexGrow: 1
   },
   appBar: {
-    //zIndex: theme.zIndex.drawer + 1, // TODO: Make this reference the toolbar? Or make toolbar be appBar - 1
+    // zIndex: theme.zIndex.drawer + 1, // TODO: Make this reference the toolbar? Or make toolbar be appBar - 1
   },
   menuButton: {
     marginLeft: -12,
-    marginRight: 20,
+    marginRight: 20
   },
   title: {
-    flexGrow: 1,
+    flexGrow: 1
   },
   mainContent: {
     flexGrow: 1,
@@ -156,10 +145,13 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.default,
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
+      duration: theme.transitions.duration.leavingScreen
+    })
   },
-  appBarSpacer: theme.mixins.toolbar, // Generic class to offset height of appBar
+  appBarSpacer: theme.mixins.toolbar // Generic class to offset height of appBar
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles, { withTheme: true })(Root));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles, { withTheme: true })(Root));

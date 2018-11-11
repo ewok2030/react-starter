@@ -8,59 +8,37 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
+// Icons
+import FolderIcon from '@material-ui/icons/Folder';
+
+// Styles
+import styles from '../styles';
 
 class ControlPanelMenuItem extends React.Component {
-    render() {
-        const { classes } = this.props;
+  render() {
+    const {
+      classes, onClick, isActive, icon, label
+    } = this.props;
 
-    handleOnClick = (id) => (event) => {
-        this.props.onClick(id, event);
-    }
-
-        return (
-            <ListItem button onClick={this.handleOnClick(this.props.id)} className={classNames(classes.menuItem, item.isActive && classes.activeItem)}>
-                {this.props.icon !== null ?
-                    <ListItemIcon className={classes.itemIcon}>
-                        {this.props.icon}
-                    </ListItemIcon> :
-                    null
-                }
-                <ListItemText primary={this.props.title} classes={{ primary: classes.itemText }} />
-            </ListItem>
-        );
-    }
+    return (
+      <ListItem button onClick={onClick} className={classNames(classes.menuItem, isActive && classes.activeMenuItem)}>
+        <ListItemIcon className={classes.menuItemIcon}>{icon === null ? <FolderIcon /> : icon}</ListItemIcon>
+        <ListItemText primary={label} classes={{ primary: classes.menuItemLabel }} />
+      </ListItem>
+    );
+  }
 }
 
-
 ControlPanelMenuItem.propTypes = {
-    id: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    onClick: PropTypes.func.isRequired,
-    isActive: PropTypes.bool.isRequired,
-    icon: PropTypes.object,
+  classes: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  label: PropTypes.string.isRequired,
+  icon: PropTypes.node,
+  isActive: PropTypes.bool.isRequired,
+  onClick: PropTypes.func.isRequired
 };
 
 ControlPanelMenuItem.defaultProps = {
-    icon: null,
+  icon: null
 };
-
-
-const styles = theme => ({
-    menuItem: {},
-    activeItem: {
-        '&:hover': {
-            backgroundColor: theme.palette.primary.main,
-            '& $itemText, & $itemText': {
-                color: theme.palette.common.white,
-            },
-        },
-        backgroundColor: theme.palette.primary.main,
-        '& $itemText, & $itemIcon': {
-            color: theme.palette.common.white,
-        },
-    },
-    itemText: {},
-    itemIcon: {},
-});
 
 export default withStyles(styles, { withTheme: true })(ControlPanelMenuItem);

@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
 
 // define the expected fields and types for this object to be inserted into Mongo
 const userSchema = new Schema({

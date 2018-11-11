@@ -1,16 +1,26 @@
-FROM node:boron
+FROM node:boron as build-env
 
 # Create app directory
-WORKDIR /usr/src/app
+WORKDIR /app
 
 # Install app dependencies
 COPY package.json .
-RUN npm install --only=production
+RUN npm install
 
-# Bundle app source
-COPY build build
+# Copy the src code into build-env
+COPY src src
+# build the app
+RUN npm run build
+
+### build the release container
+FROM node:boron
+
+WORKDIR /app
+COPY package.json .
+RUN npm install --only=production
+COPY --from=build-env /app/build .
 
 # Expose a port for express server
 EXPOSE 3000
 
-CMD [ "npm", "start" ]
+CMD [ "node", "index.js" ]

@@ -2,46 +2,46 @@
 
 A starter template for building nodejs API and react/redux apps
 
-To get started, run ```npm install``` and then ```npm run dev``` to start developing the server side monitored for changes by nodemon and hot module reload on the client side via webpack-dev-server.
+To get started, run `npm install` and then `npm run dev` to start developing the server side monitored for changes by nodemon and hot module reload on the client side via webpack-dev-server.
 
-To run in production mode, run ```npm run start``` which will build the whole solution and run from the build.
+To run in production mode, run `npm run start` which will build the whole solution and run from the build.
 
 ## Client
 
 The client side is built with the following tools:
 
-* [ReactJS](https://facebook.github.io/react/) for client side interface ([using ES6+!](https://babeljs.io/blog/2015/06/07/react-on-es6-plus))
-* [redux](http://redux.js.org/) for maintaining app state, instead of [Flux](http://fluxxor.com/what-is-flux.html)
-  * [redux-thunk](https://github.com/gaearon/redux-thunk) which lets you write action creators that return a function instead of an action
-  * [react-router](https://github.com/ReactTraining/react-router) for routing on the client side
-  * [redux-logger](https://github.com/evgenyrodionov/redux-logger) for debugging redux store via the browser console
-  * [modular 'ducks' pattern](https://github.com/erikras/ducks-modular-redux) for better organization
-* [axios](https://github.com/mzabriskie/axios) for a promise based HTTP client
-* [webpack](https://webpack.github.io/docs/what-is-webpack.html) for bundling the client JavaScript
-  * [webpack-dev-server](https://github.com/webpack/webpack-dev-server) for hot module reload in development mode
-  * See [here](https://www.codementor.io/tamizhvendan/beginner-guide-setup-reactjs-environment-npm-babel-6-webpack-du107r9zr) for a beginner guide in setting up stack
-* [babel](http://babeljs.io/) for transpiling next-gen JavaScript (i.e. ES6, ReactJS) into browser compatible JavaScript
-* [eslint](http://eslint.org/) for identifying and reporting on patterns in JavaScript
-  * [airbnb's style guide](https://github.com/airbnb/javascript) for enforcing 'a reasonable approach to JavaScript'
+- [ReactJS](https://facebook.github.io/react/) for client side interface ([using ES6+!](https://babeljs.io/blog/2015/06/07/react-on-es6-plus))
+- [redux](http://redux.js.org/) for maintaining app state, instead of [Flux](http://fluxxor.com/what-is-flux.html)
+  - [redux-thunk](https://github.com/gaearon/redux-thunk) which lets you write action creators that return a function instead of an action
+  - [react-router](https://github.com/ReactTraining/react-router) for routing on the client side
+  - [redux-logger](https://github.com/evgenyrodionov/redux-logger) for debugging redux store via the browser console
+  - [modular 'ducks' pattern](https://github.com/erikras/ducks-modular-redux) for better organization
+- [axios](https://github.com/mzabriskie/axios) for a promise based HTTP client
+- [webpack](https://webpack.github.io/docs/what-is-webpack.html) for bundling the client JavaScript
+  - [webpack-dev-server](https://github.com/webpack/webpack-dev-server) for hot module reload in development mode
+  - See [here](https://www.codementor.io/tamizhvendan/beginner-guide-setup-reactjs-environment-npm-babel-6-webpack-du107r9zr) for a beginner guide in setting up stack
+- [babel](http://babeljs.io/) for transpiling next-gen JavaScript (i.e. ES6, ReactJS) into browser compatible JavaScript
+- [eslint](http://eslint.org/) for identifying and reporting on patterns in JavaScript
+  - [airbnb's style guide](https://github.com/airbnb/javascript) for enforcing 'a reasonable approach to JavaScript'
 
 ### Structure
 
 The client side project folder structure is:
 
-* components
-  * The reusable UI components where all state is injected by their parent container
-* containers
-  * The special components who have the redux store's state bound to this properties
-  * The containers load dummy components and inject the state into them
-  * A container is usually equivalent to a web page
-* redux
-  * Where the applications state is managed via independent reducers and a redux store. See [React-Redux](#react-redux) for more
-  * Each module defines its own action types, action creators, and a reducer
-* templates
-  * Where the index.html and favicon.ico are kept
-  * All UI is managed via the components
-* client.js
-  * Where the React app is initialized and routes are defined
+- components
+  - The reusable UI components where all state is injected by their parent container
+- containers
+  - The special components who have the redux store's state bound to this properties
+  - The containers load dummy components and inject the state into them
+  - A container is usually equivalent to a web page
+- redux
+  - Where the applications state is managed via independent reducers and a redux store. See [React-Redux](#react-redux) for more
+  - Each module defines its own action types, action creators, and a reducer
+- templates
+  - Where the index.html and favicon.ico are kept
+  - All UI is managed via the components
+- client.js
+  - Where the React app is initialized and routes are defined
 
 ### React-Redux
 
@@ -53,13 +53,27 @@ To start developing an app, you'll want to identify your containers (i.e. pages 
 
 New containers must be added to [client.js](client/client.js) using the React router. New reducers must be loaded into the Redux store by using combineReducers in [store.js](client/redux/store.js).
 
+## MongoDB
+
+During development, you'll want a MongoDB setup locally. To run one in the background, run:
+
+```bash
+docker run -d \
+  --name react-app-db \
+  -p 27017:27017 \
+  -e MONGO_INITDB_DATABASE=react-app-db \
+  mongo
+```
+
+If you change the `-p` or `-e` fields of the above command, be sure to update `MONGO_URL` configuration setting in [src/server/config.js](src/server/config.js).
+
 ## Server
 
 The server side is built with the following tools:
 
-* [express](https://github.com/expressjs/express) for web server
-  * When ```NODE_ENV=production``` webpack-dev-server will be started on port configured at [webpack.config.dev](webpack.config.dev.js) => devServer.port. All requests will be proxied back to express server running on dev port 3000.
-* [mongoose](https://github.com/Automattic/mongoose) for asynchronous access to MongoDB
+- [express](https://github.com/expressjs/express) for web server
+  - When `NODE_ENV=production` webpack-dev-server will be started on port configured at [webpack.config.dev](webpack.config.dev.js) => devServer.port. All requests will be proxied back to express server running on dev port 3000.
+- [mongoose](https://github.com/Automattic/mongoose) for asynchronous access to MongoDB
 
 ## Docker
 

@@ -1,35 +1,37 @@
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const outputDirectory = '/build/public';
 
 module.exports = {
+  devtool: 'eval-source-map',
   entry: [
-    path.join(__dirname, 'src/client/index.js'),
+    'webpack-dev-server/client?http://0.0.0.0:3001', // WebpackDevServer host and port
+    'webpack/hot/only-dev-server', // "only" prevents reload on syntax errors
+    path.join(__dirname, 'src/client/index.js')
   ],
   output: {
     path: path.join(__dirname, outputDirectory),
     filename: '[name].js',
-    publicPath: '/',
+    publicPath: '/'
   },
   devServer: {
     port: 3001,
     hot: true,
-    filename: '[name].js',
-    publicPath: '/',
     historyApiFallback: true,
-    contentBase: './public',
+    contentBase: path.join(__dirname, 'build'),
     proxy: {
-      '*': 'http://localhost:3000',
-    },
+      '/api': 'http://localhost:3000'
+    }
   },
   plugins: [
-    new CleanWebpackPlugin([outputDirectory]),
     new HtmlWebpackPlugin({
       template: 'src/client/public/index.html',
       favicon: 'src/client/public/favicon.ico'
-    })
+    }),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin()
   ],
   module: {
     rules: [
@@ -49,5 +51,5 @@ module.exports = {
         loader: 'url-loader?limit=100000'
       }
     ]
-  },
+  }
 };

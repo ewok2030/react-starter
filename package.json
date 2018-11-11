@@ -4,7 +4,7 @@
   "description": "a starter template",
   "scripts": {
     "dev": "npm run server && npm run client",
-    "client": "webpack-dev-server --mode development --devtool inline-source-map --hot",
+    "client": "webpack-dev-server --mode development",
     "server": "babel-node src/server/index.js",
     "lint": "eslint src",
     "build": "webpack --mode production && babel src/server --out-dir build",
@@ -39,7 +39,7 @@
     "axios": "^0.18.0",
     "babel-eslint": "^10.0.0",
     "babel-loader": "^8.0.0",
-    "clean-webpack-plugin": "^0.1.19",
+    "classnames": "^2.2.6",
     "connected-react-router": "^5.0.1",
     "css-loader": "^1.0.0",
     "eslint": "^5.0.0",
